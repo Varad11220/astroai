@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461333429555",
+    "project_id": "pacaitech-85277",
+    "storage_bucket": "pacaitech-85277.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461333429555:android:2a0323b9c3536798bfd246",
+        "android_client_info": {
+          "package_name": "com.example.pac"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3A3NM4rxZNEiGT9FyDOPy-8PHQ1w_Y_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
