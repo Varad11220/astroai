@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'otp_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -37,13 +38,21 @@ class _SignupScreenState extends State<SignupScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.104:3000/api/auth/request-otp'),
+        Uri.parse('https://emailer3.onrender.com/api/auth/request-otp'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'email': _emailController.text}),
       );
 
       if (response.statusCode == 200) {
-        Navigator.pushNamed(context, '/otp', arguments: _emailController.text);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder:
+                (context) => OtpScreen(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                ),
+          ),
+        );
       } else {
         final errorResponse = json.decode(response.body);
         String errorMessage =
