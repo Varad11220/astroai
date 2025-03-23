@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '461333429555',
     projectId: 'pacaitech-85277',
     authDomain: 'pacaitech-85277.firebaseapp.com',
+    databaseURL: 'https://pacaitech-85277-default-rtdb.firebaseio.com',
     storageBucket: 'pacaitech-85277.firebasestorage.app',
     measurementId: 'G-HE6KMYPRXJ',
   );
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:461333429555:android:2a0323b9c3536798bfd246',
     messagingSenderId: '461333429555',
     projectId: 'pacaitech-85277',
+    databaseURL: 'https://pacaitech-85277-default-rtdb.firebaseio.com',
     storageBucket: 'pacaitech-85277.firebasestorage.app',
   );
 
@@ -63,6 +65,7 @@ class DefaultFirebaseOptions {
     appId: '1:461333429555:ios:be0a1a5ee1edcad4bfd246',
     messagingSenderId: '461333429555',
     projectId: 'pacaitech-85277',
+    databaseURL: 'https://pacaitech-85277-default-rtdb.firebaseio.com',
     storageBucket: 'pacaitech-85277.firebasestorage.app',
     iosBundleId: 'com.example.pac',
   );
@@ -72,6 +75,7 @@ class DefaultFirebaseOptions {
     appId: '1:461333429555:ios:be0a1a5ee1edcad4bfd246',
     messagingSenderId: '461333429555',
     projectId: 'pacaitech-85277',
+    databaseURL: 'https://pacaitech-85277-default-rtdb.firebaseio.com',
     storageBucket: 'pacaitech-85277.firebasestorage.app',
     iosBundleId: 'com.example.pac',
   );
@@ -82,6 +86,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '461333429555',
     projectId: 'pacaitech-85277',
     authDomain: 'pacaitech-85277.firebaseapp.com',
+    databaseURL: 'https://pacaitech-85277-default-rtdb.firebaseio.com',
     storageBucket: 'pacaitech-85277.firebasestorage.app',
     measurementId: 'G-61V9GS9YLN',
   );
