@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'screens/auth/signup_screen.dart';
-import 'screens/auth/otp_screen.dart';
+import 'screens/auth/login_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/profile_completion_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'services/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,57 +27,66 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _initialized = false;
+  bool _isLoggedIn = false;
+  bool _isProfileComplete = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final isLoggedIn = await AuthService.isUserLoggedIn();
+    bool isProfileComplete = false;
+
+    if (isLoggedIn) {
+      isProfileComplete = await AuthService.isProfileComplete();
+    }
+
+    setState(() {
+      _isLoggedIn = isLoggedIn;
+      _isProfileComplete = isProfileComplete;
+      _initialized = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Signup',
+      title: 'Flutter Auth',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/',
-      onGenerateRoute: (settings) {
-        if (settings.name == '/') {
-          return MaterialPageRoute(builder: (_) => SignupScreen());
-        } else if (settings.name == '/otp') {
-          // We're now handling OTP navigation directly in the signup screen
-          // using MaterialPageRoute instead of named routes
-          return null;
-        } else if (settings.name == '/login') {
-          // We'll implement this later
-          return MaterialPageRoute(
-            builder:
-                (_) => Scaffold(
-                  appBar: AppBar(title: Text('Login')),
-                  body: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Login Screen - Coming Soon'),
-                        SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed('/home');
-                          },
-                          child: Text('Proceed to Home'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-          );
-        } else if (settings.name == '/home') {
-          return MaterialPageRoute(builder: (_) => const HomeScreen());
-        }
-        // If no match was found, show 404
-        return MaterialPageRoute(
-          builder:
-              (_) => Scaffold(
-                appBar: AppBar(title: Text('Page Not Found')),
-                body: Center(child: Text('Route ${settings.name} not found')),
-              ),
-        );
+      home: _getInitialScreen(),
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/profile': (context) => const ProfileCompletionScreen(),
       },
     );
+  }
+
+  Widget _getInitialScreen() {
+    if (!_initialized) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (!_isLoggedIn) {
+      return SignupScreen();
+    }
+
+    if (!_isProfileComplete) {
+      return const ProfileCompletionScreen();
+    }
+
+    return const HomeScreen();
   }
 }

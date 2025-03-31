@@ -1,8 +1,7 @@
 // screens/auth/signup_screen.dart
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'otp_screen.dart';
+import '../../services/auth_service.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -21,14 +20,14 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_emailController.text.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Please enter your email')));
+      ).showSnackBar(const SnackBar(content: Text('Please enter your email')));
       return;
     }
 
     if (_passwordController.text != _confirmPasswordController.text) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Passwords do not match!')));
+      ).showSnackBar(const SnackBar(content: Text('Passwords do not match!')));
       return;
     }
 
@@ -37,13 +36,12 @@ class _SignupScreenState extends State<SignupScreen> {
     });
 
     try {
-      final response = await http.post(
-        Uri.parse('https://emailer3.onrender.com/api/auth/request-otp'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'email': _emailController.text}),
+      final result = await AuthService.signUp(
+        _emailController.text,
+        _passwordController.text,
       );
 
-      if (response.statusCode == 200) {
+      if (result['success']) {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder:
@@ -54,12 +52,9 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
         );
       } else {
-        final errorResponse = json.decode(response.body);
-        String errorMessage =
-            errorResponse['error'] ?? 'Failed to send OTP. Please try again.';
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(errorMessage)));
+        ).showSnackBar(SnackBar(content: Text(result['message'])));
       }
     } catch (e) {
       ScaffoldMessenger.of(
@@ -115,6 +110,19 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: _acceptTerms ? _sendOtp : null,
                   child: Text('Sign Up'),
                 ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Already have an account?"),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  child: const Text('Login'),
+                ),
+              ],
+            ),
           ],
         ),
       ),
