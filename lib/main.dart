@@ -63,10 +63,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Auth',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: _getInitialScreen(),
+      title: 'PAC',
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+        scaffoldBackgroundColor: Colors.grey[50],
+        appBarTheme: AppBarTheme(backgroundColor: Colors.indigo, elevation: 0),
+      ),
+      initialRoute: _getInitialRoute(),
       routes: {
+        '/': (context) => const LoginScreen(),
+        '/signup': (context) => SignupScreen(),
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/profile': (context) => const ProfileCompletionScreen(),
@@ -74,19 +80,23 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _getInitialScreen() {
+  String _getInitialRoute() {
     if (!_initialized) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      // Show loading screen
+      return '/';
     }
 
     if (!_isLoggedIn) {
-      return SignupScreen();
+      // User is not logged in, go to login screen
+      return '/login';
     }
 
     if (!_isProfileComplete) {
-      return const ProfileCompletionScreen();
+      // User is logged in but profile is incomplete
+      return '/profile';
     }
 
-    return const HomeScreen();
+    // User is logged in and has a complete profile
+    return '/home';
   }
 }

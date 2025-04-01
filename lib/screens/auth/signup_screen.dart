@@ -70,60 +70,144 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Signup')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            TextField(
-              controller: _confirmPasswordController,
-              decoration: InputDecoration(labelText: 'Confirm Password'),
-              obscureText: true,
-            ),
-            Row(
-              children: [
-                Checkbox(
-                  value: _acceptTerms,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _acceptTerms = value ?? false;
-                    });
-                  },
+      appBar: AppBar(
+        title: const Text('Create Account'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 20),
+              
+              // Logo and title
+              const Icon(
+                Icons.person_add,
+                size: 80,
+                color: Colors.indigo,
+              ),
+              const Center(
+                child: Text(
+                  'PAC',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigo,
+                  ),
                 ),
-                Text('Accept Terms and Conditions'),
-              ],
-            ),
-            SizedBox(height: 20),
-            _isLoading
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                  onPressed: _acceptTerms ? _sendOtp : null,
-                  child: Text('Sign Up'),
+              ),
+              const Center(
+                child: Text(
+                  'Personalized AI Companion',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
                 ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Already have an account?"),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  child: const Text('Login'),
+              ),
+              
+              const SizedBox(height: 30),
+              
+              // Signup form
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  prefixIcon: Icon(Icons.email),
+                  border: OutlineInputBorder(),
                 ),
-              ],
-            ),
-          ],
+                keyboardType: TextInputType.emailAddress,
+              ),
+              
+              const SizedBox(height: 16),
+              
+              TextField(
+                controller: _passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              
+              const SizedBox(height: 16),
+              
+              TextField(
+                controller: _confirmPasswordController,
+                decoration: const InputDecoration(
+                  labelText: 'Confirm Password',
+                  prefixIcon: Icon(Icons.lock_outline),
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              
+              const SizedBox(height: 16),
+              
+              // Terms and conditions
+              Row(
+                children: [
+                  Checkbox(
+                    value: _acceptTerms,
+                    activeColor: Colors.indigo,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _acceptTerms = value ?? false;
+                      });
+                    },
+                  ),
+                  const Expanded(
+                    child: Text('I accept the Terms and Conditions'),
+                  ),
+                ],
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Signup button
+              SizedBox(
+                height: 50,
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ElevatedButton(
+                        onPressed: _acceptTerms ? _sendOtp : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigo,
+                          disabledBackgroundColor: Colors.grey.shade300,
+                        ),
+                        child: const Text(
+                          'SIGN UP',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Login option
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Already have an account?"),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.indigo,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
