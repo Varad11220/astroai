@@ -51,12 +51,12 @@ This project uses [FlutterFire CLI](https://firebase.flutter.dev/docs/cli/) for 
 
 ---
 
-## 2. Node.js Backend (`emailer/`)
+## 2. Node.js Backend (`backend/`)
 
 ### Setup
 
 ```sh
-cd emailer
+cd backend
 npm install
 ```
 
@@ -72,7 +72,7 @@ npx nodemon server.js
 
 ### Environment Variables
 
-- Create a `.env` file in `emailer/` for sensitive configuration (see `.gitignore`).
+- Create a `.env` file in `backend/` for sensitive configuration (see `.gitignore`).
 - Example `.env` format:
 
   ```env
@@ -107,7 +107,7 @@ npx nodemon server.js
 
 - `astroai/`  
   Flutter app source code, screens, services, widgets, and configs.
-- `astroai/emailer/`  
+- `astroai/backend/`  
   Node.js backend, routes, controllers, models, and utilities.
 
 ---
@@ -135,7 +135,7 @@ npx nodemon server.js
 
 ## License
 
-This project is licensed under the [MIT License](emailer/LICENSE).
+This project is licensed under the [MIT License](backend/LICENSE).
 
 ---
 
